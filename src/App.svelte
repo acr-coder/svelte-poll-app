@@ -5,11 +5,17 @@
 	import Tabs from './shared/Tabs.svelte'
 	import CreatePollForm from './components/CreatePollForm.svelte'
 
-	let items = ['Current Polls', 'Add New Poll'];
-	let activeItem = 'Current Polls';
+	let items = ['Current Survey', 'Add New Survey'];
+	
+	let activeItem = 'Current Survey';
+	
+
 	const tabChange = (e) => {
 		activeItem = e.detail;
 	}
+
+	
+
 
 	let polls = [
 		{
@@ -25,26 +31,45 @@
 	const handleAdd = (e) => {
 		const poll = e.detail;
 		polls = [poll, ...polls];
-		console.log(polls);
-		activeItem = 'Current Polls'
+		
+		activeItem = 'Current Survey' 
+	}
+
+	const handleVote = (e) => {
+		const { id, option } = e.detail;
+
+		let copiedPolls = [...polls];
+		let upvotedPoll = copiedPolls.find((poll) => poll.id == id);
+
+		if (option === 'a'){
+			upvotedPoll.votesA++;
+		}
+		if (option === 'b'){
+			upvotedPoll.votesB++;
+		}
+
+		polls = copiedPolls;
 	}
 </script>
 
-<Header />
+<Header  />
 <main>
 	<Tabs {items} {activeItem} on:tabChange={tabChange} />
-	{#if activeItem === 'Current Polls' }
-		<PollList {polls}  />
-	{:else if activeItem === 'Add New Poll' }
+	{#if activeItem === 'Current Survey' }
+		<PollList {polls} on:vote={handleVote} />
+	{:else if activeItem === 'Add New Survey' }
 	<CreatePollForm on:add={handleAdd} />
 	{/if}
+	
 </main>
 <Footer />
 
 <style>
 	main{
+		
 		max-width: 960px;
 		margin: 40px auto;
 	}
+	
 	
 </style>

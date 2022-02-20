@@ -3,6 +3,7 @@
     import Button from "../shared/Button.svelte";
     
     let dispatch = createEventDispatcher();
+    
     let fields = { question: '', answerA:'',answerB:''};
     let errors = { question: '', answerA:'',answerB:''};
     let valid = false;
@@ -39,7 +40,7 @@
 
 <form on:submit|preventDefault= {submitHandler}>
     <div class="form-field">
-        <label for="question">Poll Question:</label>
+        <label for="question">Survey Question:</label>
         <input type="text" id="question" bind:value={fields.question} >
         <div class="error">{errors.question}</div>
     </div>
@@ -53,12 +54,12 @@
         <input type="text" id="answer-b" bind:value={fields.answerB} >
         <div class="error">{errors.answerB}</div>
     </div>
-    <Button type="primary" flat={true} inverse={false} >Add Poll</Button>
+    <Button type="primary" flat={true} inverse={false} >Add Survey</Button>
 </form>
 
 <style>
     form{
-        width: 400px;
+        width: 300px;
         margin: 0 auto;
         text-align: center;
     }
